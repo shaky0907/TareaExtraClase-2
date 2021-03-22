@@ -1,0 +1,3 @@
+/home/david/Documents/TareaExtraClase-2-Datos-2/Observer/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/david/Documents/TareaExtraClase-2-Datos-2/Observer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/david/Documents/TareaExtraClase-2-Datos-2/Observer/cmake-build-debug/CMakeFiles/Observer.dir
