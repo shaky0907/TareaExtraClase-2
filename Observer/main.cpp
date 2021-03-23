@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 class Subject;
@@ -21,13 +22,13 @@ public:
  * Concrete Observer
  * objeto que esta a la escucha de algun cambio del sujeto
  */
-class ChatMember : public Observer
+class NewsMember : public Observer
 {
 public:
-    ChatMember( const string state ) :
+    NewsMember( const string state ) :
             observer_state( state ) {}
 
-    ~ChatMember() {}
+    ~NewsMember() {}
 
     string getState()
     {
@@ -68,6 +69,10 @@ public:
         }
     }
 
+    vector<Observer*> get_observers(){
+        return observers;
+    }
+
     virtual string getState() = 0;
     virtual void setState( const string s ) = 0;
 
@@ -79,10 +84,10 @@ private:
  * Concrete Subject
  * objeto que es observado por un concrete observer
  */
-class ChatUser : public Subject
+class NewsCaster : public Subject
 {
 public:
-    ~ChatUser() {}
+    ~NewsCaster() {}
 
     string getState()
     {
@@ -101,31 +106,75 @@ private:
 /*
  * sobre escritura del metodo update del observer ChatMember
  */
-void ChatMember::update( Subject *subject )
+void NewsMember::update( Subject *subject )
 {
     observer_state = subject->getState();
     std::cout << "Mesajeria de member actualizada" << std::endl;
 }
 
+void addnews(Subject* subject, string msg){
+
+    subject->setState( msg );
+    subject->notify();
+}
+void addmember(Subject* subject){
+    NewsMember* tmp = new NewsMember("Chat Vacio :(");
+    subject->attach( tmp );
+}
 
 int main()
 {
-    ChatMember member1( "chat vacío :(" );
-    ChatMember member2( "chat vacío :(" );
+    Subject *subject = new NewsCaster();
+    NewsMember member( "chat vacío :(" );
+    cout << "Memoria" <<&member << endl;
+    subject->attach( &member );
 
-    std::cout << "Member 1 mensajeria: " << member1.getState() << std::endl;
-    std::cout << "Member 2 mensajeria: " << member2.getState() << std::endl;
+    bool run = true;
 
-    Subject *subject = new ChatUser();
-    subject->attach( &member1 );
-    subject->attach( &member2 );
+    while(run){
 
-    subject->setState( "Hola todos! Como van?" );
-    subject->notify();
+        int op;
+        cout<<"Bienvenido al sistema de Noticias observer!"<<endl;
+        cout<<"1. Ver noticias"<<endl;
+        cout<<"2. Mandar mensaje"<<endl;
+        cout<<"3. Añadir miembro"<<endl;
+        cout<<"4. Salir"<<endl;
+        cout<<"Que desea hacer?: ";
+        cin >> op;
 
-    std::cout << "Member 1 mensajeria: " << member1.getState() << std::endl;
-    std::cout << "Member 2 mensajeria: " << member2.getState() << std::endl;
 
-    delete subject;
+        string msg;
+        switch (op) {
+            case 1:
+                for ( unsigned int i = 0; i < subject->get_observers().size(); i++ )
+                {
+                    cout << "Member "<< i << " buzon: " << subject->get_observers().at(i)->getState() << std::endl;
+                }
+                break;
+            case 2:
+                cout << "Que desea mandar de ultima noticia?:  ";
+                cin >> msg;
+                addnews(subject,msg);
+                break;
+
+            case 3:
+
+                addmember(subject);
+                cout << "Miembro Agregado!!!" << endl;
+                break;
+
+            case 4:
+                run = false;
+                break;
+        }
+
+        cout<< "================================================================"<<endl;
+    }
+
+
+
+
+
+
     return 0;
 }
