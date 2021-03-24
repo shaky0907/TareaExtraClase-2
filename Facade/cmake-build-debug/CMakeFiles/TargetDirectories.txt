@@ -1,0 +1,3 @@
+/home/ignacio/Documents/github/TareaExtraClase-2-Datos-2/Facade/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/ignacio/Documents/github/TareaExtraClase-2-Datos-2/Facade/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ignacio/Documents/github/TareaExtraClase-2-Datos-2/Facade/cmake-build-debug/CMakeFiles/Facade.dir
